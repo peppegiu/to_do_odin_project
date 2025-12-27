@@ -10,10 +10,22 @@ const projectDisplay = document.querySelector(".project-view");
 const todoForm = document.querySelector("dialog.project-todo-form");
 const addTodo = document.querySelector(".addtodo-button");
 const todoSubmit = document.querySelector(".todo-form-submit");
-
+const todoDivGroup = document.getElementsByClassName("todo-element-div");
+const todoInspector = document.querySelector(".todo-inspector");
+const inspectorCloseBtn = document.querySelector(".close");
 
 const searchProjectByID = (projectID) => {
     return projectArray.getProjectArray()[0][projectArray.getProjectArray().findIndex((project) => project.id == projectID)];
+}
+const searchTodoByID = (project, todoID) => {
+    const foundTodo = project.todoList[project.todoList.findIndex((todo) => todo.id == todoID)];
+    if (foundTodo > 0 && foundTodo) {
+        return foundTodo;
+    }
+    else {
+        console.log("Not found \nReturning undefined");
+        return undefined;
+    }
 }
 
 
@@ -37,7 +49,8 @@ const projectListDOM = (function () {
 
 const displayProjectTodoList = function (projectID) {
     // make the project find
-    const project = projectArray.getProjectArray()[0][projectArray.getProjectArray().findIndex((project) => project.id == projectID)];
+    const project = searchProjectByID(projectID);
+    projectDisplay.id = projectID;
     // display the project;
     if (project < 0) {
         console.log("Not found");
@@ -48,11 +61,18 @@ const displayProjectTodoList = function (projectID) {
             const todoElement = document.createElement("div");
             const checkmark = document.createElement("input");
             const todoTitle = document.createElement("p");
+            const todoDiv = document.createElement("div");
+            todoElement.id = todo.id;
+            todoDiv.id = todo.id;
+            todoDiv.classList.add("todo-element-div");
             checkmark.id = todo.id;
             checkmark.setAttribute("type", "checkbox");
             todoTitle.textContent = todo.title;
             // todo list must have a checklist 
-
+            todoDiv.append(todoTitle);
+            todoElement.appendChild(todoDiv);
+            todoElement.appendChild(checkmark);
+            projectDisplay.appendChild(todoElement);
         }
     }
     
@@ -82,5 +102,37 @@ function getTodoform() {
     const todoDateValue = document.querySelector(".todo-date").value;
     const todoPriorityValue = document.querySelector(".todo-priority").value;
     const todoNotesValue = document.querySelector(".todo-notes-input").value;
-    return {titleInputValue, todoDescriptionValue, todoDateValue, todoDescriptionValue, todoNotesValue};
+    return {titleInputValue, todoDescriptionValue, todoDateValue, todoPriorityValue, todoNotesValue};
 }
+
+function pasteTodoInfoToInspector(todo) {
+    inspectorCloseBtn.id = todo.id;
+
+    // Remember to change the todos elements to inputs
+
+    // Late change the priority input to a stylized multibar (check the documentation)
+
+    const todoInspectorCheckmark = document.querySelector(".todo-inspector-checkmark");
+    const todoInspectorTitle = document.querySelector(".inspector-title");
+    const todoInspectorDescription = document.querySelector(".inspector-description");
+    const todoInspectorPriority = document.querySelector(".inspector-priority");
+    todoInspectorCheckmark.value = todo.checkmark;
+    todoInspectorTitle.textContent = todo.title;
+    todoInspectorDescription.textContent = todo.description;
+    todoInspectorPriority.textContent = `Priority: ${todo.priority}`;
+}
+
+todoDivGroup.addEventListener("click", (e) => {
+    const todoInfo = searchTodoByID(selectedProject, e.target.id);
+    if (todoInfo !== undefined) {
+        pasteTodoInfoToInspector(todoInfo);
+        todoInspector.showModal();
+    }
+    else {
+        console.log("Error: A error has ocurred. Todo info has not loaded.")
+    }
+})
+
+inspectorCloseBtn.addEventListener("click", () => {
+    // Remember the day after to get the changed todo information and save to the new todo.
+})

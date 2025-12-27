@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+</head>
+<body>
+    <nav class="nav-list">
+        <div class="addtodo-div">
+            <button class="addtodo-button"><img src="./images/add.svg" alt="add button"></button>
+            <p>Add task</p>
+        </div>
+    </nav>
+    <main class="project-view">
+        <p>No project selected</p>
+        <dialog class="project-todo-form">
+            <form action="">
+                <p>
+                    <label for="">Create a Todo!</label>
+                </p>
+                <p class="todo-title">
+                    <label class="todo-title" for="">Title:</label>
+                    <input id="todo-title-input" class="todo-title" type="text">
+                </p>
+                <p class="todo-description">
+                    <label for="" class="todo-description"></label>
+                    <textarea name="" id="todo-description-input"></textarea>
+                </p>
+                <p class="todo-duedate">
+                    <label for="" class="duedate">Due date</label>
+                    <input class="todo-date" type="date">
+                </p>
+                <p class="todo-priority">
+                    <label for="" class="priority">Set the priority of your project:</label>
+                    <input class="todo-priority" type="number" name="todo-priority" id="" min="1" max="5">
+                </p>
+                <p class="notes">
+                    <label for="" class="notes">Notes or hashtags</label>
+                    <textarea class="todo-notes-input" name="" id="todo-notes-input"></textarea>
+                </p>
+
+                <input class="todo-form-submit" type="submit" name="" id="">
+            </form>
+        </dialog>
+        <dialog class="todo-inspector">
+            <button class="close"></button>
+            <div class="inspector-checkmark">
+                <input class="todo-inspector-checkmark" type="checkmark">
+                <p class="inspector-priority"></p>
+            </div>
+            <div class="inspector-todo-content">
+                <h1 class="inspector-title"></h1>
+                <textarea class="inspector-description" name="" id=""></textarea>
+                <div class="inspector-subtasks"></div>
+            </div>
+            
+        </dialog>
+        <script type="module" src="index.js"></script>
+    </main>
+</body>
+</html>
