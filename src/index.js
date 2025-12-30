@@ -1,6 +1,6 @@
 import { ProjectArray, Project } from './project-modules/project.js';
 import To_do from './project-modules/todo.js'
-import { CLI_interface } from './project-modules/CLI_Interface.js'
+
 
 
 const projectArray = new ProjectArray();
@@ -93,6 +93,7 @@ todoSubmit.addEventListener("click", () => {
     else {
         console.log("Error from todoSubmit, line 75 in index.js: Todo not found");
     }
+    todoForm.close();
 });
 
 
@@ -103,6 +104,14 @@ function getTodoform() {
     const todoPriorityValue = document.querySelector(".todo-priority").value;
     const todoNotesValue = document.querySelector(".todo-notes-input").value;
     return {titleInputValue, todoDescriptionValue, todoDateValue, todoPriorityValue, todoNotesValue};
+}
+
+function getTodoInspectorInfo() {
+    const todoInspectorCheckmark = document.querySelector(".todo-inspector-checkmark");
+    const todoInspectorTitle = document.querySelector(".inspector-title");
+    const todoInspectorDescription = document.querySelector(".inspector-description");
+    const todoInspectorPriority = document.querySelector(".inspector-priority");
+    return {todoInspectorCheckmark, todoInspectorTitle, todoInspectorDescription, todoInspectorPriority};
 }
 
 function pasteTodoInfoToInspector(todo) {
@@ -117,9 +126,9 @@ function pasteTodoInfoToInspector(todo) {
     const todoInspectorDescription = document.querySelector(".inspector-description");
     const todoInspectorPriority = document.querySelector(".inspector-priority");
     todoInspectorCheckmark.value = todo.checkmark;
-    todoInspectorTitle.textContent = todo.title;
-    todoInspectorDescription.textContent = todo.description;
-    todoInspectorPriority.textContent = `Priority: ${todo.priority}`;
+    todoInspectorTitle.value = todo.title;
+    todoInspectorDescription.value = todo.description;
+    todoInspectorPriority.value = todo.priority;
 }
 
 todoDivGroup.addEventListener("click", (e) => {
@@ -133,6 +142,23 @@ todoDivGroup.addEventListener("click", (e) => {
     }
 })
 
-inspectorCloseBtn.addEventListener("click", () => {
+const saveToTodo = (todo, infoObject) => {
+    todo.title = infoObject.todoInspectorTitle;
+    todo.description = infoObject.todoDescriptionValue;
+    todo.priority = infoObject.todoInspectorPriority;
+    todo.checkmark = infoObject.todoInspectorCheckmark
+}
+
+inspectorCloseBtn.addEventListener("click", (e) => {
     // Remember the day after to get the changed todo information and save to the new todo.
+    const todoInfo = getTodoInspectorInfo();
+    const todo = searchProjectByID(e.target.id);
+
+    if (todo) {
+        saveToTodo(todo, todoInfo);
+        todoInspector.close();
+    }
+    else {
+        console.log("Error.")
+    }
 })

@@ -1,4 +1,4 @@
-export class To_do {
+export default class To_do {
     constructor(title, description, duedate, priority, notes) {
         this.title = title;
         this.description = description;
