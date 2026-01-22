@@ -5,7 +5,7 @@ const searchProjectByID = (projectID) => {
     return projectArray.getProjectArray()[0][projectArray.getProjectArray().findIndex((project) => project.id == projectID)];
 }
 
-exṕort const ProjectFormHandler = (() => {
+export const ProjectFormHandler = (() => {
     const createProject = (formData) => {
         const project = new Project(formData.get("project-form-name"));
         return { project };
