@@ -1,18 +1,19 @@
-import { ProjectArray, Project } from './project-modules/project.js';
+import { projectArray, Project } from './project-modules/project.js';
 import To_do from './project-modules/todo.js'
 
 
 
-const projectArray = new ProjectArray();
+
 let selectedProject = undefined;
 const sideBar = document.querySelector(".nav-list");
 const projectDisplay = document.querySelector(".project-view");
 const todoForm = document.querySelector("dialog.project-todo-form");
 const addTodo = document.querySelector(".addtodo-button");
-const todoSubmit = document.querySelector(".todo-form-submit");
-const todoDivGroup = document.getElementsByClassName("todo-element-div");
+const todoForm = document.getElementById("project-todo-form");
+const todoDivGroup = document.querySelectorAll(".todo-element-div");
 const todoInspector = document.querySelector(".todo-inspector");
 const inspectorCloseBtn = document.querySelector(".close");
+const addProjectButton = document.querySelector(".project-form-name");
 
 const searchProjectByID = (projectID) => {
     return projectArray.getProjectArray()[0][projectArray.getProjectArray().findIndex((project) => project.id == projectID)];
@@ -29,7 +30,7 @@ const searchTodoByID = (project, todoID) => {
 }
 
 
-const projectListDOM = (function () {
+
     
     const displayProjectsList = function () {
         if (projectArray.isEmpty()) {
@@ -41,9 +42,32 @@ const projectListDOM = (function () {
                 projectLine.id = project.id;
                 projectLine.innerHTML = "<div class='circle-svg'></div>";
                 projectLine.textContent += `   ${project.name}`;
+                projectDisplay.appendChild(projectLine);
             }
         }
     }
+
+const projectForm = function () {
+    
+
+}
+
+addProjectButton.addEventListener("click",) //incomplete
+
+const getProjectFormName = function () {
+    const projectFormName = document.querySelector(".project-form-name").value;
+    
+    return projectFormName;
+}
+
+const createProject = function () {
+    const formName = getProjectFormName();
+    const newProject = new Project(formName);
+    projectArray.addProject(newProject);
+}
+
+window.addEventListener("load", () => {
+    displayProjectsList();
 })
 
 
@@ -82,7 +106,9 @@ addTodo.addEventListener("click", () => {
     todoForm.showModal();
 });
 
-todoSubmit.addEventListener("click", () => {
+todoSubmit.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log('Form submission prevented. Handling with JavaScript instead.');
     const todoFormAttributes = getTodoform();
     const todo = new To_do(todoFormAttributes.titleInputValue, todoFormAttributes.todoDescriptionValue, todoFormAttributes.todoDateValue, todoFormAttributes.todoPriorityValue, todoFormAttributes.todoNotesValue);
     const project = searchProjectByID(selectedProject);
@@ -91,15 +117,15 @@ todoSubmit.addEventListener("click", () => {
         displayProjectTodoList(selectedProject);
     }
     else {
-        console.log("Error from todoSubmit, line 75 in index.js: Todo not found");
+        console.log("Error from todoSubmit: Project not found");
     }
     todoForm.close();
 });
 
 
 function getTodoform() {
-    const titleInputValue = document.querySelector(".todo-title-input").value;
-    const todoDescriptionValue = document.querySelector(".todo-description-input").value;
+    const titleInputValue = document.querySelector("#todo-title-input").value;
+    const todoDescriptionValue = document.querySelector("#todo-description-input").value;
     const todoDateValue = document.querySelector(".todo-date").value;
     const todoPriorityValue = document.querySelector(".todo-priority").value;
     const todoNotesValue = document.querySelector(".todo-notes-input").value;
@@ -131,16 +157,20 @@ function pasteTodoInfoToInspector(todo) {
     todoInspectorPriority.value = todo.priority;
 }
 
-todoDivGroup.addEventListener("click", (e) => {
-    const todoInfo = searchTodoByID(selectedProject, e.target.id);
-    if (todoInfo !== undefined) {
-        pasteTodoInfoToInspector(todoInfo);
-        todoInspector.showModal();
-    }
-    else {
-        console.log("Error: A error has ocurred. Todo info has not loaded.")
-    }
+// This code toggles a todo new tab with more details and enables edit too.
+todoDivGroup.forEach((todoDiv) => {
+    todoDiv.addEventListener("click", (e) => {
+        const todoInfo = searchTodoByID(selectedProject, e.target.id);
+        if (todoInfo !== undefined) {
+            pasteTodoInfoToInspector(todoInfo);
+            todoInspector.showModal();
+        }
+        else {
+            console.log("Error: A error has ocurred. Todo info has not loaded.")
+        }
+    })
 })
+
 
 const saveToTodo = (todo, infoObject) => {
     todo.title = infoObject.todoInspectorTitle;
