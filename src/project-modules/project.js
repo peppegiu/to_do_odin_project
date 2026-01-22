@@ -54,3 +54,5 @@ export class Project {
     }
     
 }
+
+export const projectArray = new ProjectArray();
