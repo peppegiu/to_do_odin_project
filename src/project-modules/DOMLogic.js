@@ -1,5 +1,8 @@
 import { projectArray, Project } from "./project"
-import { todoFormHandler } from "./applogic";
+import { todoFormHandler, updateSelectedProject, selectedProject, searchProjectByID } from "./applogic";
+
+const projectLines = document.querySelectorAll(".project-line");
+const projectDisplay = document.querySelector(".project-view");
 
 export const displayProjectsList = (DisplayElement) => {
     if (projectArray.isEmpty) {
@@ -9,6 +12,7 @@ export const displayProjectsList = (DisplayElement) => {
         for (project of projectArray.getProjectArray()[0]) {
             const projectLine = document.createElement("div");
             projectLine.id = project.id;
+            projectLine.classList.add("project-line")
             projectLine.innerHTML = "<div class='circle-svg'></div>";
             projectLine.textContent += `   ${project.name}`;
             DisplayElement.appendChild(projectLine);
@@ -44,5 +48,12 @@ DOMElement.todoForm.addEventListener("submit", (event) => {
     event.preventDefault();
     console.log("default prevented!");
     const formData = todoFormHandler.getFormData(event.target);
-    todoFormHandler.saveFormData()
+    todoFormHandler.saveFormData(selectedProject, formData);
+})
+
+projectLines.forEach((projectLine) => {
+    projectLine.addEventListener(("click"), () => {
+        updateSelectedProject(projectLine.id);
+        displayTodoList(projectDisplay, searchProjectByID(projectLine.id));
+    })
 })
