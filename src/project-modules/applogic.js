@@ -11,15 +11,15 @@ export const searchProjectByID = (projectID) => {
   ];
 };
 export const searchTodoByID = (project, todoID) => {
-    const foundTodo = project.todoList[project.todoList.findIndex((todo) => todo.id == todoID)];
-    if (foundTodo > 0 && foundTodo) {
-        return foundTodo;
-    }
-    else {
-        console.log("Not found \nReturning undefined");
-        return undefined;
-    }
-}
+  const foundTodo =
+    project.todoList[project.todoList.findIndex((todo) => todo.id == todoID)];
+  if (foundTodo > 0 && foundTodo) {
+    return foundTodo;
+  } else {
+    console.log("Not found \nReturning undefined");
+    return undefined;
+  }
+};
 
 export const updateSelectedProject = (projectID) => {
   selectedProject = searchProjectByID(projectID);
@@ -74,11 +74,24 @@ export const inspector = () => {
     todoInspectorTitle = todo.title;
     todoInspectorDescription = todo.description;
     todoInspectorPriority = todo.priority;
-    return {todoInspectorCheckmark,
+    return {
+      todoInspectorCheckmark,
+      todoInspectorTitle,
+      todoInspectorDescription,
+      todoInspectorPriority,
+    };
+  };
+  const saveTodoInfo = (
+    todoInspectorCheckmark,
     todoInspectorTitle,
     todoInspectorDescription,
-    todoInspectorPriority}
+    todoInspectorPriority,
+    todo,
+  ) => {
+    todo.checkmark = todoInspectorCheckmark;
+    todo.title = todoInspectorTitle;
+    todo.description = todoInspectorDescription;
+    todo.priority = todoInspectorPriority;
   };
-  const saveTodoInfo = (todo) => {};
-  return { copyTodoInfo };
+  return { copyTodoInfo, saveTodoInfo };
 };

@@ -8,13 +8,12 @@ import {
   inspector,
 } from "./applogic";
 
-
 const inspectorElements = {
   todoInspectorCheckmark: document.querySelector(".todo-inspector-checkmark"),
   todoInspectorTitle: document.querySelector(".inspector-title"),
   todoInspectorDescription: document.querySelector(".inspector-description"),
   todoInspectorPriority: document.querySelector(".inspector-priority"),
-}
+};
 const projectLines = document.querySelectorAll(".project-line");
 const projectDisplay = document.querySelector(".project-view");
 const todoElement = document.querySelectorAll(".todo-element-div");
@@ -35,8 +34,14 @@ export const displayProjectsList = (DisplayElement) => {
 };
 
 const displayTodoInspector = (DisplayElement, todo) => {
-  DisplayElement.id = todo.id;
-  inspector.copyTodoInfo(inspectorElements.todoInspectorCheckmark, inspectorElements.todoInspectorTitle, inspectorElements.todoInspectorDescription, inspectorElements.todoInspectorPriority, todo);
+  DisplayElement.setAttribute("todo-id", todo.id);
+  inspector.copyTodoInfo(
+    inspectorElements.todoInspectorCheckmark,
+    inspectorElements.todoInspectorTitle,
+    inspectorElements.todoInspectorDescription,
+    inspectorElements.todoInspectorPriority,
+    todo,
+  );
 };
 
 export const displayTodoList = (DisplayElement, project) => {
@@ -59,7 +64,6 @@ export const displayTodoList = (DisplayElement, project) => {
   }
 };
 
-
 const DOMElement = {
   todoForm: document.getElementById("project-todo-form"),
   todoInspector: document.querySelector(".inspector-todo-content"),
@@ -81,20 +85,22 @@ projectLines.forEach((projectLine) => {
 
 todoElement.forEach((todo) => {
   todo.addEventListener("click", (event) => {
-    displayTodoInspector(DOMElement.todoInspector, searchTodoByID(selectedProject, event.target.id));    
-  })
-})
+    displayTodoInspector(
+      DOMElement.todoInspector,
+      searchTodoByID(selectedProject, event.target.id),
+    );
+  });
+});
 
 DOMElement.todoInspector.addEventListener("submit", (event) => {
   event.preventDefault();
   console.log("default prevented from todo inspector!");
   const formData = todoFormHandler.getFormData(event.target);
-  inspector.copyTodoInfo(
+  inspector.saveTodoInfo(
     formData.get("todo-inspector-checkmark"),
     formData.get("inspector-title"),
     formData.get("inspector-description"),
     formData.get("inspector-priority"),
-
+    searchTodoByID(event.target.getAttribute("todo-id")),
   );
 });
- 
