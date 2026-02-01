@@ -8,6 +8,10 @@ import {
   inspector,
 } from "./applogic";
 
+window.addEventListener("load", () => {
+    displayProjectsList();
+})
+
 const inspectorElements = {
   todoInspectorCheckmark: document.querySelector(".todo-inspector-checkmark"),
   todoInspectorTitle: document.querySelector(".inspector-title"),
