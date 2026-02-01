@@ -77,19 +77,19 @@
         <form action="" id="todo-inspector">
           <button type="submit" class="close"></button>
           <div class="inspector-checkmark">
-            <input class="todo-inspector-checkmark" type="checkmark" />
+            <input name="todo-inspector-checkmark" class="todo-inspector-checkmark" type="checkmark" />
             <label for="inspector-priority">Priority: </label>
             <input
               class="inspector-priority"
-              class=""
+              name="inspector-priority"
               type="number"
               min="1"
               max="5"
             />
           </div>
           <div class="inspector-todo-content">
-            <input class="inspector-title" type="text" />
-            <textarea class="inspector-description" name="" id=""></textarea>
+            <input name="inspector-title" class="inspector-title" type="text" />
+            <textarea class="inspector-description" name="inspector-description" id=""></textarea>
             <div class="inspector-subtasks"></div>
           </div>
         </form>
