@@ -42,24 +42,20 @@ export const ProjectFormHandler = (() => {
 })();
 
 export const todoFormHandler = () => {
-  const getFormData = function (formElement) {
+  const handleData = function (formElement, project) {
     const formData = new FormData(formElement);
-
-    return formData;
-  };
-  const saveFormData = function (project, formData) {
     const newTodo = new Todo(
       formData.get("todo-title"),
       formData.get("todo-description-input"),
       formData.get("todo-date"),
       formData.get("todo-priority"),
-      formData,
-      get(todo - notes),
+      formData.get("todo-notes-input"),
+      
     );
-    project.addTodo(newTodo);
-  };
+    project.addTodo(newTodo)
+  }
 
-  return { getFormData, saveFormData };
+  return {handleData};
 };
 
 export const inspector = () => {
