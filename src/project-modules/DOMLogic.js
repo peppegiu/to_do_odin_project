@@ -1,6 +1,7 @@
 import { projectArray, Project } from "./project";
 import {
   todoFormHandler,
+  projectFormHandler,
   updateSelectedProject,
   selectedProject,
   searchProjectByID,
@@ -8,9 +9,7 @@ import {
   inspector,
 } from "./applogic";
 
-window.addEventListener("load", () => {
-    displayProjectsList();
-})
+
 
 const inspectorElements = {
   todoInspectorCheckmark: document.querySelector(".todo-inspector-checkmark"),
@@ -70,22 +69,41 @@ export const displayTodoList = (DisplayElement, project) => {
 
 const DOMElement = {
   todoForm: document.getElementById("project-todo-form"),
-  todoInspector: document.querySelector(".inspector-todo-content"),
+  projectFormDialog: document.querySelector(".project-form"),
+  projectForm: document.querySelector("#project-form"),
+  todoFormDialog: document.querySelector(".project-todo-form"),
+  todoInspector: document.querySelector("#todo-inspector"),
+  todoInspectorDialog: document.querySelector(".todo-inspector-dialog"),
+  addTodoBtn: document.querySelector(".addtodo-button"),
+  addProjectBtn: document.querySelector(".addproject-button"),
+  projectDisplay: document.querySelector(".project-view"),
 };
 
-DOMElement.todoForm.addEventListener("submit", (event) => {
+DOMElement.addTodoBtn.addEventListener("click", () =>
+  DOMElement.todoFormDialog.showModal(),
+);
+
+DOMElement.addProjectBtn.addEventListener("click", () =>
+  DOMElement.projectFormDialog.showModal(),
+);
+
+DOMElement.projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  console.log("default prevented!");
-  const formData = todoFormHandler.getFormData(event.target);
-  todoFormHandler.saveFormData(selectedProject, formData);
+  projectFormHandler(event.target, selectedProject);
+  displayProjectsList(projectDisplay);
 });
 
 projectLines.forEach((projectLine) => {
   projectLine.addEventListener("click", () => {
     updateSelectedProject(projectLine.id);
     displayTodoList(projectDisplay, searchProjectByID(projectLine.id));
+    displayTodoButton();
   });
 });
+
+const displayTodoButton = () => {
+  DOMElement.addTodoBtn.setAttribute("hidden", "false");
+};
 
 todoElement.forEach((todo) => {
   todo.addEventListener("click", (event) => {
@@ -94,6 +112,11 @@ todoElement.forEach((todo) => {
       searchTodoByID(selectedProject, event.target.id),
     );
   });
+});
+
+DOMElement.todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  todoFormHandler(event.target, selectedProject);
 });
 
 DOMElement.todoInspector.addEventListener("submit", (event) => {
@@ -107,4 +130,9 @@ DOMElement.todoInspector.addEventListener("submit", (event) => {
     formData.get("inspector-priority"),
     searchTodoByID(event.target.getAttribute("todo-id")),
   );
+  DOMElement.todoInspectorDialog.close();
+});
+
+window.addEventListener("load", () => {
+  displayProjectsList(projectDisplay);
 });

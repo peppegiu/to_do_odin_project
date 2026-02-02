@@ -6,7 +6,7 @@ import To_do from './project-modules/todo.js'
 
 let selectedProject = undefined;
 const sideBar = document.querySelector(".nav-list");
-const projectDisplay = document.querySelector(".project-view");
+
 const addTodo = document.querySelector(".addtodo-button");
 const todoForm = document.getElementById("project-todo-form");
 const todoDivGroup = document.querySelectorAll(".todo-element-div");
@@ -18,3 +18,4 @@ const addProjectButton = document.querySelector(".project-form-name");
 
 
 
+ 
