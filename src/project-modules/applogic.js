@@ -1,5 +1,5 @@
 import { projectArray, Project } from "./project";
-import { Todo } from "./todo";
+import Todo  from "./todo";
 
 export let selectedProject;
 
@@ -10,6 +10,7 @@ export const searchProjectByID = (projectID) => {
       .findIndex((project) => project.id == projectID)
   ];
 };
+
 export const searchTodoByID = (project, todoID) => {
   const foundTodo =
     project.todoList[project.todoList.findIndex((todo) => todo.id == todoID)];
@@ -25,24 +26,14 @@ export const updateSelectedProject = (projectID) => {
   selectedProject = searchProjectByID(projectID);
 };
 
-export const ProjectFormHandler = (() => {
-  const createProject = (formData) => {
-    const project = new Project(formData.get("project-form-name"));
-    return { project };
-  };
-  const getFormData = (formElement) => {
-    const formData = new FormData(formElement);
-    return formData;
-  };
+export const projectFormHandler = (formElement, project) => {
+  const formData = new FormData(formElement);
+  const project = new Project(formData.get("project-form-name"));
 
-  const addProject = (project) => {
-    projectArray.getProjectArray()[0].push(project);
-  };
-  return { createProject, addProject };
-})();
+  projectArray.getProjectArray()[0].push(project);
+};
 
-export const todoFormHandler = () => {
-  const handleData = function (formElement, project) {
+export const todoFormHandler = (formElement, project) => {
     const formData = new FormData(formElement);
     const newTodo = new Todo(
       formData.get("todo-title"),
@@ -53,9 +44,6 @@ export const todoFormHandler = () => {
       
     );
     project.addTodo(newTodo)
-  }
-
-  return {handleData};
 };
 
 export const inspector = () => {

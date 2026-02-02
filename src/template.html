@@ -9,13 +9,13 @@
   <body>
     <nav class="nav-list">
       <div class="addtodo-div">
-        <button class="addtodo-button">
+        <button class="addtodo-button" hidden>
           <img src="./images/add.svg" alt="add button" />
         </button>
         <p>Add task</p>
       </div>
       <div class="addproject-div">
-        <button class="addproject-button"></button>
+        <button class="addproject-button">Create Project</button>
         <p>Create Project</p>
       </div>
     </nav>
@@ -73,7 +73,7 @@
           </button>
         </form>
       </dialog>
-      <dialog class="todo-inspector">
+      <dialog class="todo-inspector-dialog">
         <form action="" id="todo-inspector">
           <button type="submit" class="close"></button>
           <div class="inspector-checkmark">
@@ -95,15 +95,17 @@
         </form>
       </dialog>
       <dialog class="project-form">
-        <p>
-          <label for="project-form-name">Project name:</label>
-          <input
-            class="project-form-name"
-            name="project-form-name"
-            type="text"
-          />
-          <button type="submit">submit</button>
-        </p>
+        <form action="" id="project-form">
+          <p>
+            <label for="project-form-name">Project name:</label>
+            <input
+              class="project-form-name"
+              name="project-form-name"
+              type="text"
+            />
+            <button type="submit">submit</button>
+          </p>
+        </form>
       </dialog>
       <script type="module" src="index.js"></script>
     </main>
