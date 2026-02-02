@@ -3,6 +3,8 @@ import Todo  from "./todo";
 
 export let selectedProject;
 
+
+
 export const searchProjectByID = (projectID) => {
   return projectArray.getProjectArray()[0][
     projectArray
@@ -45,6 +47,8 @@ export const todoFormHandler = (formElement, project) => {
     );
     project.addTodo(newTodo)
 };
+
+
 
 export const inspector = () => {
   const copyTodoInfo = (
