@@ -23,7 +23,7 @@ const DOMElement = {
 };
 
 
-const DisplayElement = document.querySelector(".project-view");
+const DisplayElement = document.querySelector("#project-view");
 
 // inicialização
 state.on("projectListChanged", (e) => {
@@ -44,6 +44,40 @@ DOMElement.projectForm.addEventListener("submit", (e) => {
   const project = new Project(formData.get("project-form-name"));
   state.addProject(project); // dispara evento e DOM atualiza via listener
 });
+
+state.on("projectUpdated", (e) => {
+  const project = e.detail.project;
+  renderProjectTodos(project);
+})
+
+function createTodoElement(todo) {
+  const todoElement = document.createElement("div");
+  const checkmark = document.createElement("input");
+  const todoTitle = document.createElement("p");
+  const todoDiv = document.createElement("div");
+  const todoExpandableCard = document.createElement("div");
+  const todoButton = document.createElement("button");
+    todoElement.id = todo.id;
+  todoDiv.id = todo.id;
+  todoDiv.classList.add("todo-element-div");
+
+  todoExpandableCard.innerHTML = `<p>${todo.description}</p> <p>${todo.duedate}</p> <p>${todo.notes}</p>`
+  todoExpandableCard.style.visibility = false;
+  checkmark.id = todo.id;
+  checkmark.setAttribute("type", "checkbox");
+  todoTitle.textContent = todo.title;
+  // todo list must have a checklist
+  todoDiv.append(todoTitle);
+  todoDiv.append(todoExpandableCard);
+  todoDiv.append(todoButton)
+  todoElement.appendChild(todoDiv);
+  todoElement.appendChild(checkmark);
+  
+
+  todoButton.addEventListener("click", () => {todoExpandableCard.style.visibility = true});
+
+  DisplayElement.appendChild(todoElement);
+}
 
 const inspectorElements = {
   todoInspectorCheckmark: document.querySelector(".todo-inspector-checkmark"),
@@ -83,31 +117,18 @@ const displayTodoInspector = (DisplayElement, todo) => {
 };
 
 export const renderProjectTodos = (project) => {
+  DisplayElement.innerHTML = "";
+
   for (todo of project.todoList) {
-    const todoElement = document.createElement("div");
-    const checkmark = document.createElement("input");
-    const todoTitle = document.createElement("p");
-    const todoDiv = document.createElement("div");
-    const todoExpandableCard = document.createElement("div");
-    const todoButton = document.
-    todoElement.id = todo.id;
-    todoDiv.id = todo.id;
-    todoDiv.classList.add("todo-element-div");
-    
-    todoExpandableCard.innerHTML = `<p>${todo.description}</p> <p>${todo.duedate}</p> <p>${todo.notes}</p>`
-    todoExpandableCard.style.visibility = false;
-    checkmark.id = todo.id;
-    checkmark.setAttribute("type", "checkbox");
-    todoTitle.textContent = todo.title;
-    // todo list must have a checklist
-    todoDiv.append(todoTitle);
-    todoDiv.append(todoExpandableCard);
-    todoElement.appendChild(todoDiv);
-    todoElement.appendChild(checkmark);
-    
-    DisplayElement.appendChild(todoElement);
+    createTodoElement(todo);
   }
 };
+
+DisplayElement.addEventListener("click", (e) => {
+  if (e.target.classList.contains("expand")) {
+    const todoId = e.target.dataset.todo - id;
+  }
+})
 
 
 DOMElement.addTodoBtn.addEventListener("click", () =>
