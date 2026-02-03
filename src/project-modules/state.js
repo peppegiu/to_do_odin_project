@@ -1,3 +1,4 @@
+import PubSub from "pubsub-js";
 
 const state = {
   projectArray: [],

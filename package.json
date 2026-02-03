@@ -16,8 +16,12 @@
     "html-webpack-plugin": "^5.6.5",
     "pubsub-js": "^1.9.5",
     "style-loader": "^4.0.0",
-    "webpack": "^5.103.0",
+    "webpack": "^5.105.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.3"
+  },
+  "dependencies": {
+    "crypto-browserify": "^3.3.0",
+    "uuidv4": "^6.2.13"
   }
 }

@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 export class ProjectArray {
     #projects = [];
 
@@ -29,9 +31,11 @@ export class Project {
     constructor(name) {
         this.name = name;
     }
-    id = crypto.randomUUID();
 
+
+    id = crypto.randomBytes(20).toString('hex');
     todoList = [];
+
 
     addTodo(todo) {
         this.todoList.push(todo);
