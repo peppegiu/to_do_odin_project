@@ -40,6 +40,17 @@ export function addTodoToProject(projectId, todo) {
 
 
 
+const deleteTodo = (msg, {proj, id}) => {
+  if (msg == "DELETE TODO") {
+    proj.todoList.splice(proj.todoList.findIndex((todo) => todo.id == id), 1);
+  }
+  emitter.dispatchEvent(
+    new CustomEvent("projectUpdated", { detail: { project: proj } }),
+  )
+}
+
+let token = PubSub.subscribe("DELETE TODO", deleteTodo);
+
 export function on(eventName, handler) {
   emitter.addEventListener(eventName, handler);
 }

@@ -9,6 +9,7 @@ import {
   inspector,
 } from "./applogic";
 import state from "./state.js";
+import PubSub from "pubsub-js";
 
 const DOMElement = {
   todoForm: document.getElementById("project-todo-form"),
@@ -50,17 +51,18 @@ state.on("projectUpdated", (e) => {
   renderProjectTodos(project);
 })
 
-function createTodoElement(todo) {
+function createTodoElement(todo, project) {
   const todoElement = document.createElement("div");
   const checkmark = document.createElement("input");
   const todoTitle = document.createElement("p");
   const todoDiv = document.createElement("div");
   const todoExpandableCard = document.createElement("div");
   const todoButton = document.createElement("button");
-    todoElement.id = todo.id;
+  const todoDeleteBtn = document.createElement("button");
+  todoDeleteBtn.innerText = "Delete";
+  todoElement.id = todo.id;
   todoDiv.id = todo.id;
   todoDiv.classList.add("todo-element-div");
-
   todoExpandableCard.innerHTML = `<p>${todo.description}</p> <p>${todo.duedate}</p> <p>${todo.notes}</p>`
   todoExpandableCard.style.visibility = false;
   checkmark.id = todo.id;
@@ -73,8 +75,15 @@ function createTodoElement(todo) {
   todoElement.appendChild(todoDiv);
   todoElement.appendChild(checkmark);
   
-
+  todoDeleteBtn.addEventListener("click", () => {
+    const data = {
+      proj: project,
+      id: todo.id,
+    }
+    PubSub.publish("DELETE TODO", data);
+  })
   todoButton.addEventListener("click", () => {todoExpandableCard.style.visibility = true});
+
 
   DisplayElement.appendChild(todoElement);
 }
@@ -112,7 +121,6 @@ const displayTodoInspector = (DisplayElement, todo) => {
     inspectorElements.todoInspectorTitle,
     inspectorElements.todoInspectorDescription,
     inspectorElements.todoInspectorPriority,
-    todo,
   );
 };
 
@@ -120,7 +128,7 @@ export const renderProjectTodos = (project) => {
   DisplayElement.innerHTML = "";
 
   for (todo of project.todoList) {
-    createTodoElement(todo);
+    createTodoElement(todo, project);
   }
 };
 
