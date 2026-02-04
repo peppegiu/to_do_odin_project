@@ -26,7 +26,7 @@ const DOMElement = {
 const DisplayElement = document.querySelector("#project-view");
 
 function renderProjects (projects) {
-  console.log(projects);
+  console.log("Projects:" + projects);
   if (projects.length == 0) {
     console.log("No projects created");
   } else {
@@ -120,6 +120,7 @@ const todoElement = document.querySelectorAll(".todo-element-div");
 
 
 function createProjectLine(project) {
+  console.log("Project:" +project);
   const projectLine = document.createElement("div");
   projectLine.id = project.id;
   projectLine.classList.add("project-line");

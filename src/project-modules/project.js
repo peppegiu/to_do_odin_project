@@ -1,4 +1,5 @@
-const crypto = require('crypto');
+import { v4 as uuidv4 } from 'uuid';
+
 
 export class ProjectArray {
     #projects = [];
@@ -33,7 +34,7 @@ export class Project {
     }
 
 
-    id = crypto.randomBytes(20).toString('hex');
+    id = uuidv4();
     todoList = [];
 
 
