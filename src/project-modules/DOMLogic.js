@@ -10,6 +10,7 @@ import {
 import state from "./state.js";
 import PubSub from "pubsub-js";
 import Todo from "./todo.js";
+import "./style.css"
 
 const DOMElement = {
   todoForm: document.getElementById("project-todo-form"),
@@ -20,12 +21,14 @@ const DOMElement = {
   todoInspectorDialog: document.querySelector(".todo-inspector-dialog"),
   addTodoBtn: document.querySelector(".addtodo-button"),
   addProjectBtn: document.querySelector(".addproject-button"),
-  projectDisplay: document.querySelector(".project-view"),
+  projectDisplay: document.querySelector("#project-view"),
 };
 
 const DisplayElement = document.querySelector("#project-view");
 
 function renderProjects (projects) {
+
+  DOMElement.projectDisplay.innerHTML = "";
   console.log("Projects:" + projects);
   if (projects.length == 0) {
     console.log("No projects created");
@@ -48,6 +51,10 @@ state.on("selectedProjectChanged", (e) => {
   const project = state.getState().projectArray.find((p) => p.id === id);
   renderProjectTodos(project);
 });
+
+DOMElement.projectFormDialog.addEventListener("submit", (e) => {
+  DOMElement.projectFormDialog.close();
+})
 
 // quando o usuário submete um form:
 DOMElement.projectForm.addEventListener("submit", (e) => {
@@ -114,7 +121,6 @@ const inspectorElements = {
   todoInspectorPriority: document.querySelector(".inspector-priority"),
 };
 const projectLines = document.querySelectorAll(".project-line");
-const projectDisplay = document.querySelector(".project-view");
 const todoElement = document.querySelectorAll(".todo-element-div");
 
 
