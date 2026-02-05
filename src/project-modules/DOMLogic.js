@@ -30,7 +30,7 @@ function renderProjects (projects) {
   if (projects.length == 0) {
     console.log("No projects created");
   } else {
-    for (let project in projects) {
+    for (let project of projects) {
       createProjectLine(project);
     }
   }
