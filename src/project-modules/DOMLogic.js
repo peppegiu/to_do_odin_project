@@ -10,7 +10,7 @@ import {
 import state from "./state.js";
 import PubSub from "pubsub-js";
 import Todo from "./todo.js";
-import "./style.css"
+import "../style.css"
 
 const DOMElement = {
   todoForm: document.getElementById("project-todo-form"),
@@ -84,7 +84,8 @@ function createTodoElement(todo, project) {
   const todoExpandableCard = document.createElement("div");
   const todoButton = document.createElement("button");
   const todoDeleteBtn = document.createElement("button");
-  todoDeleteBtn.innerText = "Delete";
+  todoDeleteBtn.innerText = "🗑";
+  todoDeleteBtn.classList.add("smallBtn");
   todoElement.id = todo.id;
   todoDiv.id = todo.id;
   todoDiv.classList.add("todo-element-div");

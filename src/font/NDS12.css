@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'NDS12';
+    src: url('fonts/NDS12.eot');
+    src: url('fonts/NDS12.eot?#iefix') format('embedded-opentype'),
+         url('fonts/NDS12.woff2') format('woff2'),
+         url('fonts/NDS12.woff') format('woff'),
+         url('fonts/NDS12.ttf')  format('truetype'),
+         url('fonts/NDS12.svg#NDS12') format('svg');
+}
