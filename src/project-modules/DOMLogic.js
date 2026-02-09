@@ -10,7 +10,9 @@ import {
 import state from "./state.js";
 import PubSub from "pubsub-js";
 import Todo from "./todo.js";
-import "../style.css"
+import "../style.css";
+import addProjectImg from "../images/addProject.png";
+import addTodoImg from "../images/addTodo.png";
 
 const DOMElement = {
   todoForm: document.getElementById("project-todo-form"),
@@ -22,7 +24,11 @@ const DOMElement = {
   addTodoBtn: document.querySelector(".addtodo-button"),
   addProjectBtn: document.querySelector(".addproject-button"),
   projectDisplay: document.querySelector("#project-view"),
+  addProjectIcon: document.querySelector(".addProjectIcon"),
+  addTodoIcon: document.querySelector(".addTodoIcon"),
 };
+DOMElement.addProjectIcon.src = addProjectImg;
+DOMElement.addTodoIcon.src = addTodoImg;
 
 const DisplayElement = document.querySelector("#project-view");
 
