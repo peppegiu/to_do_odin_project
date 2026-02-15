@@ -26,63 +26,38 @@ const DOMElement = {
   projectDisplay: document.querySelector("#project-view"),
   addProjectIcon: document.querySelector(".addProjectIcon"),
   addTodoIcon: document.querySelector(".addTodoIcon"),
+  projectListElement: document.querySelector(".project-list"),
+  selectedProjectInfo: document.getElementById("selected-project-info"),
 };
 DOMElement.addProjectIcon.src = addProjectImg;
 DOMElement.addTodoIcon.src = addTodoImg;
 
-const DisplayElement = document.querySelector("#project-view");
 
-function renderProjects (projects) {
+function renderProjects (projects, displayElement) {
 
-  DOMElement.projectDisplay.innerHTML = "";
+  displayElement.innerHTML = "";
   console.log("Projects:" + projects);
   if (projects.length == 0) {
     console.log("No projects created");
   } else {
     for (let project of projects) {
-      createProjectLine(project);
+      createProjectLine(project, displayElement);
     }
   }
 };
+
+
 
 // inicialização
 state.on("projectListChanged", (e) => {
   const projects = e.detail.projectArray;
   console.log(projects);
-  renderProjects(projects);
+  renderProjects(projects, DOMElement.projectListElement);
 });
 
-state.on("selectedProjectChanged", (e) => {
-  const id = e.detail.selectedProjectId;
-  const project = state.getState().projectArray.find((p) => p.id === id);
-  renderProjectTodos(project);
-});
 
-DOMElement.projectFormDialog.addEventListener("submit", (e) => {
-  DOMElement.projectFormDialog.close();
-})
 
-// quando o usuário submete um form:
-DOMElement.projectForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  console.log(formData);
-  const project = new Project(formData.get("project-form-name"));
-  state.addProject(project); // dispara evento e DOM atualiza via listener
-});
-
-DOMElement.todoForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const formData = new FormData(e.target);
-  PubSub.publish("TODO_FORM", formData);
-});
-
-state.on("projectUpdated", (e) => {
-  const project = e.detail.project;
-  renderProjectTodos(project);
-});
-
-function createTodoElement(todo, project) {
+function createTodoElement(todo, project, displayElement) {
   const todoElement = document.createElement("div");
   const checkmark = document.createElement("input");
   const todoTitle = document.createElement("p");
@@ -116,10 +91,18 @@ function createTodoElement(todo, project) {
   });
   todoButton.addEventListener("click", () => {
     todoExpandableCard.style.visibility = true;
-  });
+  });projectArray
 
-  DisplayElement.appendChild(todoElement);
+  displayElement.appendChild(todoElement);
 }
+
+export const renderProjectTodos = (project, displayElement) => {
+  displayElement.innerHTML = "";
+
+  for (let todo of project.todoList) {
+    createTodoElement(todo, project, displayElement);
+  }
+};
 
 const inspectorElements = {
   todoInspectorCheckmark: document.querySelector(".todo-inspector-checkmark"),
@@ -130,30 +113,69 @@ const inspectorElements = {
 const projectLines = document.querySelectorAll(".project-line");
 const todoElement = document.querySelectorAll(".todo-element-div");
 
+function updateselectedProjectInfo(element, info) {
+  element.innerText = `${info.name} is selected with id ${info.id}`;
+}
 
 
-function createProjectLine(project) {
+state.on("selectedProjectChanged", (e) => {
+  console.log("Event is working 2!");
+  const id = e.detail.selectedProjectId;
+  const project = state.getState().projectArray.find((p) => p.id === id);
+  
+  renderProjectTodos(project, DOMElement.projectDisplay);
+});
+
+state.on("selectedProjectChanged", (e) => {
+  console.log("Event is working!");
+  const id = e.detail.selectedProjectId;
+  const project = state.getState().projectArray.find((p) => p.id === id);
+
+  updateselectedProjectInfo(DOMElement.selectedProjectInfo, project);
+
+})
+
+DOMElement.projectFormDialog.addEventListener("submit", (e) => {
+  DOMElement.projectFormDialog.close();
+})
+
+// quando o usuário submete um form:
+DOMElement.projectForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  console.log(formData);
+  const project = new Project(formData.get("project-form-name"));
+  state.addProject(project); // dispara evento e DOM atualiza via listener
+});
+
+DOMElement.todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  PubSub.publish("TODO_FORM", formData);
+});
+
+state.on("projectUpdated", (e) => {
+  const project = e.detail.project;
+  renderProjectTodos(project, DOMElement.projectDisplay);
+});
+
+
+function createProjectLine(project, displayElement) {
   console.log("Project:" +project);
   const projectLine = document.createElement("div");
   projectLine.id = project.id;
   projectLine.classList.add("project-line");
   projectLine.innerHTML = "<div class='circle-svg'></div>";
   projectLine.textContent += `   ${project.name}`;
-  DisplayElement.appendChild(projectLine);
+  displayElement.appendChild(projectLine);
 
   projectLine.addEventListener("click", (e) => {
-    const proj = state.getState().projectArray.find((p) => p.id === project.id);
-    renderProjectTodos(proj);
+    console.log("Array: " + [].constructor);
+    console.log("Projectarray: " +state.getState().projectArray.constructor);
+    state.setSelectedProjectId(project.id);
   });
 }
 
-export const renderProjectTodos = (project) => {
-  DisplayElement.innerHTML = "";
-
-  for (todo of project.todoList) {
-    createTodoElement(todo, project);
-  }
-};
 
 DOMElement.addTodoBtn.addEventListener("click", () =>
   DOMElement.todoFormDialog.showModal(),
@@ -163,9 +185,6 @@ DOMElement.addProjectBtn.addEventListener("click", () =>
   DOMElement.projectFormDialog.showModal(),
 );
 
-projectLines.forEach((projectLine) => {
-  projectLine.addEventListener("click", () => {});
-});
 
 const displayTodoButton = () => {
   DOMElement.addTodoBtn.setAttribute("hidden", "false");

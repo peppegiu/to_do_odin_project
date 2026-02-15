@@ -8,7 +8,7 @@ const state = {
 const emitter = new EventTarget();
 
 export function getState() {
-  return { ...state, projectArray: { ...state.projectArray } };
+  return { ...state, projectArray: [...state.projectArray] };
 }
 
 export function setSelectedProjectId(id) {
@@ -41,7 +41,7 @@ export function addTodoToProject(projectId, todo) {
 
 
 
-const deleteTodo = (msg, {proj, id}) => {
+const deleteTodo = (msg, { proj, id }) => {
   if (msg == "DELETE TODO") {
     proj.todoList.splice(proj.todoList.findIndex((todo) => todo.id == id), 1);
   }

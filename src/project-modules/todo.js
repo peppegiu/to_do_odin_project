@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export default class Todo {
   constructor(title, description, duedate, priority, notes) {
     this.title = title;
@@ -6,7 +8,7 @@ export default class Todo {
     this.priority = priority;
     this.notes = notes;
   }
-  id = crypto.randomUUID();
+  id = uuidv4();
 
   checkmark = false;
 
