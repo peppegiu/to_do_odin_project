@@ -43,6 +43,7 @@
               class="todo-title"
               type="text"
               name="todo-title"
+              required
             />
           </p>
           <p class="todo-description">
@@ -54,7 +55,7 @@
           </p>
           <p class="todo-duedate">
             <label for="" class="duedate">Due date</label>
-            <input class="todo-date" type="date" name="todo-date" />
+            <input class="todo-date" type="date" name="todo-date" required/>
           </p>
           <p class="todo-priority">
             <label for="" class="priority"
@@ -67,6 +68,7 @@
               id=""
               min="1"
               max="5"
+              required
             />
           </p>
           <p class="notes">
@@ -99,6 +101,7 @@
               type="number"
               min="1"
               max="5"
+              required
             />
           </div>
           <div class="inspector-todo-content">
@@ -120,6 +123,7 @@
               class="project-form-name"
               name="project-form-name"
               type="text"
+              required
             />
             <button class="myButton" type="submit">submit</button>
           </p>
