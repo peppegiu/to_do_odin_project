@@ -151,9 +151,15 @@ body {
 }
 
 .todo-line-div {
-	line-height: 48px;
+	line-height: 57px;
 	font-size: 16px;
 	padding-top: 5px;
+	width: 100%;
+}
+
+.checkmark {
+	width: 40px;
+	height: 40px;
 }
 
 .boxHeader {
@@ -161,8 +167,24 @@ body {
 	margin-bottom: 5px;
 	padding-left: 10px;
 	font-weight: bold;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
 }
 
 .todo-line-div p {
 	margin: 0;
+}
+
+.todo-folding-card {
+	font-size: 18px;
+	width: 100%;
+	height: 30%;
+}
+
+.todo-btn-nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.8em;
 }
