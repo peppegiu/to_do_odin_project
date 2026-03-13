@@ -32,7 +32,7 @@
       </div>
 
       <dialog class="project-todo-form">
-        <form id="project-todo-form" action="">
+        <form id="project-todo-form" name="todo-form" action="">
           <p>
             <label for="">Create a Todo!</label>
           </p>
@@ -87,7 +87,6 @@
       </dialog>
       <dialog class="todo-inspector-dialog">
         <form action="" id="todo-inspector">
-          <button type="submit" class="close myButton"></button>
           <div class="inspector-checkmark">
             <input
               name="todo-inspector-checkmark"
@@ -105,13 +104,19 @@
             />
           </div>
           <div class="inspector-todo-content">
-            <input name="inspector-title" class="inspector-title" type="text" />
+            <input class="todo-id" name="todo-id" type="text" hidden>
+            <label for="todo-title">Title:</label>
+            <input name="todo-title" class="inspector-title" type="text" />
+            <label for="todo-description">Description:</label>
             <textarea
               class="inspector-description"
-              name="inspector-description"
+              name="todo-description"
               id=""
             ></textarea>
+            <label for="todo-notes">Notes:</label>
+            <textarea name="todo-notes" id=""></textarea>
             <div class="inspector-subtasks"></div>
+            <button type="submit">Submit</button>
           </div>
         </form>
       </dialog>

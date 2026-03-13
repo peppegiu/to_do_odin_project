@@ -3,7 +3,6 @@ import Todo from "./todo";
 import state from "./state";
 import PubSub from "pubsub-js";
 
-export let selectedProject;
 export default class Applogic {
   init() {
     PubSub.subscribe("TODO_FORM", function (msg, formData) {

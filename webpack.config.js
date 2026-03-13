@@ -2,6 +2,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { type } = require("os");
+const { compareAsc } = require("date-fns");
 
 module.exports = {
   mode: "development",

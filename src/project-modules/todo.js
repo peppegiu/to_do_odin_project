@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export default class Todo {
   constructor(title, description, duedate, priority, notes) {
@@ -13,6 +13,13 @@ export default class Todo {
   checkmark = false;
 
   subTasks = [];
+
+  set properties({ title, description, duedate, notes }) {
+    this.title = title;
+    this.description = description;
+    this.duedate = duedate;
+    this.notes = notes;
+  }
 
   addSubTask(subTask) {
     this.subTasks.push(subTask);

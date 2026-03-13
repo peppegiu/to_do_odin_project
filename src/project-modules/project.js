@@ -37,6 +37,9 @@ export class Project {
     id = uuidv4();
     todoList = [];
 
+    get list() {
+        return [...this.todoList];
+    }
 
     addTodo(todo) {
         this.todoList.push(todo);
