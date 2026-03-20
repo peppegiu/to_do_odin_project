@@ -44,6 +44,8 @@ body {
 .project-view {
 	grid-area: 1 / 2 / 3 / 3;
 	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .nav-list {
@@ -220,4 +222,18 @@ form.todo-line-div {
 	background-color:#0061a7;
 }
 
-      
+
+.todo-h1 {
+	content: "";
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 100%;
+	height: 10px;
+	border-top: black solid 3px;
+}     
+
+.todo-section {
+	margin-top: 20px 0;
+	display: grid;
+	grid-template-columns: repeat(2, 2fr);
+}

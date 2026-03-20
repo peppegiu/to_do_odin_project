@@ -8,17 +8,29 @@ export default class Todo {
     this.priority = priority;
     this.notes = notes;
   }
+  #overdue = null;
+
+  get getOverdueStatus() {
+    return this.#overdue;
+  }
+
+  set setOverdueStatus(number) {
+    this.#overdue = number;
+  }
+
   id = uuidv4();
 
   checkmark = false;
 
   subTasks = [];
 
-  set properties({ title, description, duedate, notes }) {
-    this.title = title;
-    this.description = description;
-    this.duedate = duedate;
-    this.notes = notes;
+  set properties({ title, description, duedate, priority, notes, checkmark }) {
+    if (title !== undefined) this.title = title;
+    if (description !== undefined) this.description = description;
+    if (duedate !== undefined) this.duedate = duedate;
+    if (priority !== undefined) this.priority = priority;
+    if (notes !== undefined) this.notes = notes;
+    if (checkmark !== undefined) this.checkmark = Boolean(checkmark);
   }
 
   addSubTask(subTask) {

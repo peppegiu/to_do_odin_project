@@ -11,7 +11,11 @@
     <nav class="nav-list">
       <div class="addtodo-div">
         <button class="addtodo-button smallBtn" hidden>
-          <img src="./images/addTodo.png" alt="add button" class="addTodoIcon icon"/>
+          <img
+            src="./images/addTodo.png"
+            alt="add button"
+            class="addTodoIcon icon"
+          />
         </button>
         <p>Add task</p>
       </div>
@@ -21,16 +25,15 @@
         </button>
         <p>Create Project</p>
       </div>
-      <div class="project-list">
-        
-      </div>
+      <div class="project-list"></div>
     </nav>
     <main class="project-view">
       <p id="selected-project-info">No project selected</p>
-      <div id="project-view">
-        
-      </div>
+      <h1 class="todo-h1">Todos</h1>
+      <section id="project-view" class="todo-section"></section>
 
+      <h1 class="todo-h1">Expired Todos</h1>
+      <section id="duedateTodos" class="todo-section"></section>
       <dialog class="project-todo-form">
         <form id="project-todo-form" name="todo-form" action="">
           <p>
@@ -55,7 +58,7 @@
           </p>
           <p class="todo-duedate">
             <label for="" class="duedate">Due date</label>
-            <input class="todo-date" type="date" name="todo-date" required/>
+            <input class="todo-date" type="date" name="todo-date" required />
           </p>
           <p class="todo-priority">
             <label for="" class="priority"
@@ -104,15 +107,17 @@
             />
           </div>
           <div class="inspector-todo-content">
-            <input class="todo-id" name="todo-id" type="text" hidden>
+            <input class="todo-id" name="todo-id" type="text" hidden />
             <label for="todo-title">Title:</label>
-            <input name="todo-title" class="inspector-title" type="text" />
+            <input name="todo-title" class="inspector-title" type="text" required/>
             <label for="todo-description">Description:</label>
             <textarea
               class="inspector-description"
               name="todo-description"
               id=""
             ></textarea>
+            <label for="todo-date">Due date: </label>
+            <input type="date" class="todo-date" name="todo-date" required>
             <label for="todo-notes">Notes:</label>
             <textarea name="todo-notes" id=""></textarea>
             <div class="inspector-subtasks"></div>

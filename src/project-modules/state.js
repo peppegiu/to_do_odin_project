@@ -1,6 +1,8 @@
 import PubSub from "pubsub-js";
 import { projectArray } from "./project";
 import { compareAsc } from "date-fns";
+import { compareDueDate } from "./debugdateManager";
+import { storage } from "./storage";
 
 const state = {
   projectArray: [],
@@ -34,7 +36,7 @@ export function addProject(project) {
 export function addTodoToProject(projectId, todo) {
   const proj = state.projectArray.find((p) => p.id === projectId);
   if (proj) {
-    proj.todoList.push(todo);
+    proj.addTodo(todo);
     emitter.dispatchEvent(
       new CustomEvent("projectUpdated", { detail: { project: proj } }),
     );
@@ -43,10 +45,7 @@ export function addTodoToProject(projectId, todo) {
 
 const deleteTodo = (msg, { proj, id }) => {
   if (msg == "DELETE TODO") {
-    proj.todoList.splice(
-      proj.todoList.findIndex((todo) => todo.id == id),
-      1,
-    );
+    proj.removeTodo(id);
   }
   emitter.dispatchEvent(
     new CustomEvent("projectUpdated", { detail: { project: proj } }),
@@ -60,19 +59,25 @@ export function on(eventName, handler) {
 }
 
 PubSub.subscribe("TODO_UPDATE", function (msg, formData) {
+  console.log("TODO_UPDATE received", formData.get("todo-date"))
   const proj = state.projectArray.find(
     (proj) => proj.id == state.selectedProjectId,
   );
-  console.log(formData.get("todo-id"));
 
-  const todo = proj.todoList.find((task) => task.id == formData.get("todo-id"));
+  const todo = proj.list.find((task) => task.id == formData.get("todo-id"));
 
   todo.properties = {
     title: formData.get("todo-title"),
     description: formData.get("todo-description"),
     duedate: formData.get("todo-date"),
+    priority:
+      formData.get("inspector-priority") || formData.get("todo-priority"),
     notes: formData.get("todo-notes"),
+    checkmark: formData.get("todo-inspector-checkmark"),
   };
+
+  todo.setOverdueStatus = compareDueDate(formData.get("todo-date"));
+  console.log("TODO_UPDATE done:  " + todo.title, todo.duedate);
 
   emitter.dispatchEvent(
     new CustomEvent("projectUpdated", { detail: { project: proj } }),
@@ -93,6 +98,12 @@ PubSub.subscribe("PROJECT_DELETE", (msg, id) => {
   );
 });
 
+PubSub.subscribe("SORT_TODO", (msg, projectId) => {
+  const proj = state.projectArray.find((p) => p.id === projectId);
+  for (let todo of proj.list) {
+    todo.setOverdueStatus = compareDueDate(todo.duedate);
+  }
+});
 
 export default {
   getState,

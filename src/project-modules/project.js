@@ -36,6 +36,7 @@ export class Project {
 
     id = uuidv4();
     todoList = [];
+    #dueDateTodoList = [];
 
     get list() {
         return [...this.todoList];
@@ -43,6 +44,10 @@ export class Project {
 
     addTodo(todo) {
         this.todoList.push(todo);
+    }
+
+    addTodoDueDate(todo) {
+        this.#dueDateTodoList.push(todo);
     }
 
     removeTodo(todoID) {
@@ -56,6 +61,7 @@ export class Project {
         }
         
     }
+
 
     getArrayLength() {
         return this.todoList.length;

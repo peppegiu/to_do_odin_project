@@ -2,6 +2,8 @@ import { projectArray, Project } from "./project";
 import Todo from "./todo";
 import state from "./state";
 import PubSub from "pubsub-js";
+import { compareAsc } from "date-fns";
+import { compareDueDate } from "./debugdateManager";
 
 export default class Applogic {
   init() {
@@ -14,8 +16,11 @@ export default class Applogic {
         formData.get("todo-priority"),
         formData.get("todo-notes"),
       );
+      todo.setOverdueStatus = compareDueDate(formData.get("todo-date"))
       const selectedProject = state.getState().selectedProjectId;
       state.addTodoToProject(selectedProject, todo);
     });
   }
 }
+
+
