@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-do</title>
+    <link rel="stylesheet" />
+  <script defer src="main.js"></script></head>
+
+  <body>
+    <nav class="nav-list">
+      <div class="addtodo-div">
+        <button class="addtodo-button smallBtn" hidden>
+          <img
+            src="./images/addTodo.png"
+            alt="add button"
+            class="addTodoIcon icon"
+          />
+        </button>
+        <p>Add task</p>
+      </div>
+      <div class="addproject-div">
+        <button class="addproject-button smallBtn">
+          <img alt="" class="addProjectIcon" />
+        </button>
+        <p>Create Project</p>
+      </div>
+      <div class="project-list"></div>
+    </nav>
+    <main class="project-view">
+      <p id="selected-project-info">No project selected</p>
+      <h1 class="todo-h1">Todos</h1>
+      <section id="project-view" class="todo-section"></section>
+
+      <h1 class="todo-h1">Expired Todos</h1>
+      <section id="duedateTodos" class="todo-section"></section>
+      <dialog class="project-todo-form">
+        <form id="project-todo-form" name="todo-form" action="">
+          <p>
+            <label for="">Create a Todo!</label>
+          </p>
+          <p class="todo-title">
+            <label class="todo-title" for="">Title:</label>
+            <input
+              id="todo-title-input"
+              class="todo-title"
+              type="text"
+              name="todo-title"
+              required
+            />
+          </p>
+          <p class="todo-description">
+            <label for="" class="todo-description"></label>
+            <textarea
+              name="todo-description"
+              id="todo-description-input"
+            ></textarea>
+          </p>
+          <p class="todo-duedate">
+            <label for="" class="duedate">Due date</label>
+            <input class="todo-date" type="date" name="todo-date" required />
+          </p>
+          <p class="todo-priority">
+            <label for="" class="priority"
+              >Set the priority of your project:</label
+            >
+            <input
+              class="todo-priority"
+              type="number"
+              name="todo-priority"
+              id=""
+              min="1"
+              max="5"
+              required
+            />
+          </p>
+          <p class="notes">
+            <label for="" class="notes">Notes or hashtags</label>
+            <textarea
+              class="todo-notes-input"
+              name="todo-notes"
+              id="todo-notes-input"
+            ></textarea>
+          </p>
+
+          <button class="todo-form-submit myButton" type="submit" name="" id="">
+            Submit
+          </button>
+        </form>
+      </dialog>
+      <dialog class="todo-inspector-dialog">
+        <form action="" id="todo-inspector">
+          <div class="inspector-checkmark">
+            <input
+              name="todo-inspector-checkmark"
+              class="todo-inspector-checkmark"
+              type="checkmark"
+            />
+            <label for="inspector-priority">Priority: </label>
+            <input
+              class="inspector-priority"
+              name="inspector-priority"
+              type="number"
+              min="1"
+              max="5"
+              required
+            />
+          </div>
+          <div class="inspector-todo-content">
+            <input class="todo-id" name="todo-id" type="text" hidden />
+            <label for="todo-title">Title:</label>
+            <input name="todo-title" class="inspector-title" type="text" required/>
+            <label for="todo-description">Description:</label>
+            <textarea
+              class="inspector-description"
+              name="todo-description"
+              id=""
+            ></textarea>
+            <label for="todo-date">Due date: </label>
+            <input type="date" class="todo-date" name="todo-date" required>
+            <label for="todo-notes">Notes:</label>
+            <textarea name="todo-notes" id=""></textarea>
+            <div class="inspector-subtasks"></div>
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </dialog>
+      <dialog class="project-form">
+        <form action="" id="project-form">
+          <p>
+            <label for="project-form-name">Project name:</label>
+            <input
+              class="project-form-name"
+              name="project-form-name"
+              type="text"
+              required
+            />
+            <button class="myButton" type="submit">submit</button>
+          </p>
+        </form>
+      </dialog>
+      <script type="module" src="index.js"></script>
+    </main>
+  </body>
+</html>
